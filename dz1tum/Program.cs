@@ -1,5 +1,4 @@
 ﻿using System;
-using dz1tum.stren;
 
 namespace dz1tum
 {
@@ -7,30 +6,38 @@ namespace dz1tum
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Упражнение 3.1");
-            Console.WriteLine($"Номер текущего аккаунта: {(int)bank.Bankacccurr},сберегательного: {(int)bank.Bankaccsave}");
-
-            Console.WriteLine("\nУпражнение 3.2");
-            bankacc acc = new bankacc();
-            Console.WriteLine("Введите номер счета:");
-            acc.Number = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Введите тип счета:");
-            acc.Type = Console.ReadLine();
-            Console.WriteLine("Введите баланс счета:");
-            acc.Balance = Double.Parse(Console.ReadLine());
-            Console.WriteLine($"Номер счета:{acc.Number}, тип:{acc.Type}, баланс:{acc.Balance}");
-
-            Console.WriteLine("\nДомашнее задание 3.1");
-            worker firstworker = new worker();
-            Console.WriteLine("Введите имя работника");
-            firstworker.Name = Console.ReadLine();
-            Console.WriteLine("Введите id  работника");
-            firstworker.Workplace =Convert.ToInt32( Console.ReadLine());
-            Console.WriteLine($"Имя работника: {firstworker.Name}, id места работы: {(int)firstworker.Workplace}");
-
-
-
-
+            Console.WriteLine("Упражнение 4.1+Упражнение 4.2+ Дз 4.1\nВведите текущий год");
+            try
+            {
+                Console.Write("Введите год: ");
+                int year = int.Parse(Console.ReadLine());
+                Console.Write("Введите номер дня в году: ");
+                int day = int.Parse(Console.ReadLine());
+                bool isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+                int maxDays = isLeapYear ? 366 : 365;
+                if (day < 1 || day > maxDays)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(day), $"Число должно быть в диапазоне от 1 до {maxDays} для {year} года.");
+                }
+                int[] daysInMonths = { 31, isLeapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+                string[] monthNames = { "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря" };
+                int currentDay = day;
+                int monthIndex = 0;
+                while (currentDay > daysInMonths[monthIndex])
+                {
+                    currentDay -= daysInMonths[monthIndex];
+                    monthIndex++;
+                }
+                Console.WriteLine($"Число {day} соответствует: {currentDay} {monthNames[monthIndex]}.");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine($"Ошибка валидации: {ex.Message}");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Ошибка: Число введено некорректно.");
+            }
         }
     }
 }
