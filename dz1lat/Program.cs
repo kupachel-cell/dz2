@@ -162,7 +162,6 @@ namespace dz1lat
                     bag++;
                 }
             }
-
             Console.WriteLine($"В сумке кукол: {bag}");
         }
 
